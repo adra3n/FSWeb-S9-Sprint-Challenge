@@ -78,7 +78,7 @@ export default function AppFunctional(props) {
 
   function onChange(evt) {
     // inputun değerini güncellemek için bunu kullanabilirsiniz
-    setEmail(e.target.value)
+    setEmail(evt.target.value)
   }
 
   function onSubmit(evt) {
