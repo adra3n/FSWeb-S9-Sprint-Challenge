@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import axios from 'axios'
 
 // önerilen başlangıç stateleri
 const initialMessage = ''
@@ -84,13 +85,14 @@ export default function AppFunctional(props) {
   function onSubmit(evt) {
     // payloadu POST etmek için bir submit handlera da ihtiyacınız var.
     evt.preventDefault()
+    const dataSend = {
+      x: grid[activeSquare].x,
+      y: grid[activeSquare].y,
+      email: email,
+      steps: steps,
+    }
     axios
-      .post('http://localhost:9000/api/result', {
-        x: grid[activeSquare].x,
-        y: grid[activeSquare].y,
-        email: email,
-        steps: steps,
-      })
+      .post('http://localhost:9000/api/result', dataSend)
       .then((res) => setMessage(res.data.message))
       .catch((err) => setMessage(err.response.data.message))
       .finally(() => {
