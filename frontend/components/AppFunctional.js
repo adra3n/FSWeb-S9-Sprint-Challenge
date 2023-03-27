@@ -83,6 +83,19 @@ export default function AppFunctional(props) {
 
   function onSubmit(evt) {
     // payloadu POST etmek için bir submit handlera da ihtiyacınız var.
+    evt.preventDefault()
+    axios
+      .post('http://localhost:9000/api/result', {
+        x: grid[activeSquare].x,
+        y: grid[activeSquare].y,
+        email: email,
+        steps: steps,
+      })
+      .then((res) => setMessage(res.data.message))
+      .catch((err) => setMessage(err.response.data.message))
+      .finally(() => {
+        setEmail(initialEmail)
+      })
   }
 
   return (
