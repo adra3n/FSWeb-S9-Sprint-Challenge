@@ -41,7 +41,7 @@ export default function AppFunctional(props) {
     // Koordinatları almak için yukarıdaki "getXY" helperını ve ardından "getXYMesaj"ı kullanabilirsiniz.
     // tamamen oluşturulmuş stringi döndürür.
     getXY()
-    const mesaj = `Koordinatlar (${grid[activeSquare].x},${grid[activeSquare].y}) `
+    const mesaj = `Koordinatlar (${grid[activeSquare].x},${grid[activeSquare].y})`
     return mesaj
   }
 
@@ -49,6 +49,8 @@ export default function AppFunctional(props) {
     // Tüm stateleri başlangıç ​​değerlerine sıfırlamak için bu helperı kullanın.
     setActiveSquare(initialIndex)
     setSteps(initialSteps)
+    setMessage(initialMessage)
+    setEmail(initialEmail)
   }
 
   function sonrakiIndex(yon) {
@@ -74,7 +76,16 @@ export default function AppFunctional(props) {
     // Bu event handler, "B" için yeni bir dizin elde etmek üzere yukarıdaki yardımcıyı kullanabilir,
     // ve buna göre state i değiştirir.
     const yon = evt.target.id
-    setActiveSquare(sonrakiIndex(yon))
+    const yonText = evt.target.name
+    const nextSquareId = sonrakiIndex(yon)
+    if (nextSquareId !== grid[activeSquare].id) {
+      setSteps(steps + 1)
+      setMessage(initialMessage)
+      setActiveSquare(nextSquareId)
+    }
+    if (nextSquareId === grid[activeSquare].id) {
+      setMessage(`${yonText} gidemezsiniz`)
+    }
   }
 
   function onChange(evt) {
@@ -104,7 +115,7 @@ export default function AppFunctional(props) {
     <div id="wrapper" className={props.className}>
       <div className="info">
         <h3 id="coordinates">{getXYMesaj()}</h3>
-        <h3 id="steps">0 kere ilerlediniz</h3>
+        <h3 id="steps">{steps} kere ilerlediniz</h3>
       </div>
       <div id="grid">
         {grid.map((i) => (
@@ -117,19 +128,19 @@ export default function AppFunctional(props) {
         ))}
       </div>
       <div className="info">
-        <h3 id="message"></h3>
+        <h3 id="message">{message}</h3>
       </div>
       <div id="keypad">
-        <button onClick={ilerle} id="left">
+        <button onClick={ilerle} id="left" name="Sola">
           SOL
         </button>
-        <button onClick={ilerle} id="up">
+        <button onClick={ilerle} id="up" name="Yukarıya">
           YUKARI
         </button>
-        <button onClick={ilerle} id="right">
+        <button onClick={ilerle} id="right" name="Sağa">
           SAĞ
         </button>
-        <button onClick={ilerle} id="down">
+        <button onClick={ilerle} id="down" name="Aşağıya">
           AŞAĞI
         </button>
         <button onClick={reset} id="reset">
